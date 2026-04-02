@@ -1,0 +1,73 @@
+# Public relay bind address. `:443` is the default remote-first choice.
+listen_addr = "0.0.0.0:443"
+
+# Primary mode for direct Telegram client use in blocked networks.
+mode = "mtproxy"
+
+handshake_timeout_secs = 10
+outbound_connect_timeout_secs = 10
+idle_timeout_secs = 300
+
+max_concurrent_streams = 1024
+max_handshake_size = 2048
+
+log_level = "info"
+
+# MTProxy mode configuration.
+[mtproxy]
+# 16-byte secret hex, dd + 16-byte secret hex for padded mode,
+# or ee + 16-byte secret hex + hex(domain-as-ASCII) for fake-TLS mode.
+secret = "ee00112233445566778899aabbccddeeff7777772e74656c656772616d2e6f7267"
+backend = "official"
+
+[mtproxy.official]
+binary_path = "/opt/MTProxy/objs/bin/mtproto-proxy"
+proxy_config_path = "var/telegram/proxy-multi.conf"
+proxy_secret_path = "var/telegram/proxy-secret"
+stats_port = 8888
+run_as_user = "mtproxy"
+workers = 0
+auto_refresh = true
+refresh_interval_secs = 86400
+
+# Optional:
+# proxy_tag = "replace-with-tag-from-mtproxybot"
+
+# Pure-Rust fallback backend:
+#
+# backend = "static_dc"
+# [[mtproxy.dc_endpoints]]
+# id = 1
+# addr = "replace-with-current-dc1-endpoint:443"
+#
+# [[mtproxy.dc_endpoints]]
+# id = 2
+# addr = "replace-with-current-dc2-endpoint:443"
+
+[destination_policy]
+# Keep false in production unless you explicitly need private destinations.
+allow_private_destinations = false
+
+# Optional exact-host allowlist.
+allowed_domains = []
+
+# Optional suffix allowlist. Examples:
+# allowed_domain_suffixes = ["telegram.org", "t.me", "telegra.ph"]
+allowed_domain_suffixes = []
+
+# Optional exact-IP allowlist.
+allowed_ips = []
+
+# Direct SOCKS5 fallback example:
+#
+# mode = "direct_socks5"
+# [socks_auth]
+# username = "telegram"
+# password = "change-me"
+#
+# Legacy tunnel mode example:
+#
+# mode = "tunnel"
+# tls_cert_path = "certs/dev/relay-cert.pem"
+# tls_key_path = "certs/dev/relay-key.pem"
+# auth_token = "change-me"

@@ -1,0 +1,13 @@
+services:
+  tg-relay:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tg-relay
+    restart: unless-stopped
+    ports:
+      - "443:443"
+    volumes:
+      - ./config/relay.example.toml:/etc/tg-relay/config.toml:ro
+      - ./var/telegram:/app/var/telegram
+    command: ["--config", "/etc/tg-relay/config.toml"]

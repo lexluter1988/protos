@@ -1,0 +1,36 @@
+[workspace]
+members = [
+    "crates/common",
+    "crates/tg_local",
+    "crates/tg_relay",
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+license = "MIT"
+version = "0.1.0"
+
+[workspace.dependencies]
+aes = "0.8"
+anyhow = "1.0"
+clap = { version = "4.5", features = ["derive", "env"] }
+ctr = "0.9"
+hex = "0.4"
+hmac = "0.12"
+rand = "0.8"
+rcgen = "0.13"
+reqwest = { version = "0.12", default-features = false, features = ["rustls-tls"] }
+rustls = { version = "0.23", features = ["ring"] }
+rustls-pemfile = "2.1"
+rustls-pki-types = "1.10"
+serde = { version = "1.0", features = ["derive"] }
+sha2 = "0.10"
+tempfile = "3.10"
+thiserror = "2.0"
+tokio = { version = "1.48", features = ["fs", "io-util", "macros", "net", "process", "rt-multi-thread", "signal", "sync", "time"] }
+tokio-rustls = "0.26"
+toml = "0.8"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "fmt"] }
+webpki-roots = "0.26"

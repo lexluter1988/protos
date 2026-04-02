@@ -1,0 +1,29 @@
+# Optional local SOCKS5 helper on desktop platforms.
+# This requires the relay to run in `mode = "tunnel"`.
+listen_addr = "127.0.0.1:1080"
+
+# Public address of the relay in tunnel mode.
+relay_addr = "relay.example.com:8443"
+
+# Must match the relay certificate host name in tunnel mode.
+relay_server_name = "relay.example.com"
+
+# Shared secret used inside the TLS tunnel.
+auth_token = "change-me"
+
+handshake_timeout_secs = 10
+connect_timeout_secs = 10
+idle_timeout_secs = 300
+
+# "local" resolves domains on the Mac. "remote" sends domains to the relay.
+dns_mode = "remote"
+
+log_level = "info"
+
+# Required if the relay uses a self-signed certificate in tunnel mode.
+ca_cert_path = "certs/dev/relay-cert.pem"
+
+# Uncomment to require SOCKS5 username/password on the local helper.
+# [socks_auth]
+# username = "telegram"
+# password = "change-me"
